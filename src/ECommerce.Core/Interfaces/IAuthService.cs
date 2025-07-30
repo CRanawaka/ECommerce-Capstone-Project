@@ -5,6 +5,7 @@ namespace ECommerce.Core.Interfaces
     public interface IAuthService
     {
         Task<User> RegisterAsync(string firstName, string lastName, string email, string password);
+        Task<string?> LoginAsync(string email, string password);
     }
 
 }

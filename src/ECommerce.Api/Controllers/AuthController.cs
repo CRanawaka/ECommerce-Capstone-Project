@@ -33,6 +33,19 @@ namespace ECommerce.Api.Controllers
                 return BadRequest(new { message = ex.Message });
             }
         }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Login(UserLoginDto request)
+        {
+            var token = await _authService.LoginAsync(request.Email, request.Password);
+
+            if (string.IsNullOrEmpty(token))
+            {
+                return Unauthorized(new { message = "Invalid email or password." });
+            }
+
+            return Ok(new { token });
+        }
     }
 }
 
