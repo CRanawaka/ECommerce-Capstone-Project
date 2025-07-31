@@ -1,6 +1,8 @@
 using ECommerce.Core.Interfaces;
 using ECommerce.Api.Dtos;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ECommerce.Api.Controllers
 {
@@ -45,6 +47,22 @@ namespace ECommerce.Api.Controllers
             }
 
             return Ok(new { token });
+        }
+
+        [HttpGet("me")]
+        [Authorize]
+        public IActionResult GetMyProfile()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // Gets the user's ID
+            var userEmail = User.FindFirstValue(ClaimTypes.Email);       // Gets the user's email
+
+            if (userId == null)
+            {
+                return Unauthorized();
+            }
+
+            // You can now use this ID to fetch more user details from the database
+            return Ok(new { Id = userId, Email = userEmail });
         }
     }
 }
