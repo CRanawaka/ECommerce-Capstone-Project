@@ -8,6 +8,7 @@ namespace ECommerce.Core.Entities
         public string Email { get; set; } = string.Empty;
         public byte[] PasswordHash { get; set; } = [];
         public byte[] PasswordSalt { get; set; } = [];
+        public string Role { get; set; } = "Customer"; // Default role is Customer
 
         // Additional properties and methods can be added here as needed
     }

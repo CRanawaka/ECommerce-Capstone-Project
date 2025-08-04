@@ -9,6 +9,8 @@ namespace ECommerce.Api.Profiles
         public MappingProfile()
         {
             CreateMap<Product, ProductDto>();
+            CreateMap<ProductDto, Product>();
+            CreateMap<ProductCreateDto, Product>();
 
         }
     }
