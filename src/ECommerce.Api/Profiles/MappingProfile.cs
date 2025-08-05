@@ -11,6 +11,11 @@ namespace ECommerce.Api.Profiles
             CreateMap<Product, ProductDto>();
             CreateMap<ProductDto, Product>();
             CreateMap<ProductCreateDto, Product>();
+            CreateMap<ShoppingCart, ShoppingCartDto>();
+            CreateMap<CartItem, CartItemDto>()
+                .ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src.Product.Name))
+                .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.Product.Price));
+
 
         }
     }

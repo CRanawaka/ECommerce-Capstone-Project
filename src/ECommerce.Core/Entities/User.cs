@@ -10,6 +10,8 @@ namespace ECommerce.Core.Entities
         public byte[] PasswordSalt { get; set; } = [];
         public string Role { get; set; } = "Customer"; // Default role is Customer
 
+        public ShoppingCart? ShoppingCart { get; set; } // Navigation property for ShoppingCart
+
         // Additional properties and methods can be added here as needed
     }
 }
