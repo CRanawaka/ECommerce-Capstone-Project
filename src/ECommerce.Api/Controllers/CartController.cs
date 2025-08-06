@@ -39,5 +39,22 @@ namespace ECommerce.Api.Controllers
             await _cartRepo.AddItemToCartAsync(GetUserId().ToString(), productId, quantity);
             return Ok();
         }
+
+        [HttpPut("items/{productId}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult> UpdateCartItem(int productId, [FromQuery] int quantity)
+        {
+            await _cartRepo.UpdateItemQuantityAsync(GetUserId().ToString(), productId, quantity);
+            return NoContent();
+        }
+
+        [HttpDelete("items/{productId}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<ActionResult> RemoveCartItem(int productId)
+        {
+            await _cartRepo.RemoveItemFromCartAsync(GetUserId().ToString(), productId);
+            return NoContent();
+        }
     }
 }

@@ -42,5 +42,36 @@ namespace ECommerce.Infrastructure.Data.Repositories
             }
             await _context.SaveChangesAsync();
         }
+
+        public async Task UpdateItemQuantityAsync(string userId, int productId, int quantity)
+        {
+            var cart = await GetCartByUserIdAsync(userId);
+            var cartItem = cart?.Items.FirstOrDefault(ci => ci.ProductId == productId);
+
+            if (cartItem != null)
+            {
+                if (quantity > 0)
+                {
+                    cartItem.Quantity = quantity;
+                }
+                else
+                {
+                    cart.Items.Remove(cartItem);
+                }
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        public async Task RemoveItemFromCartAsync(string userId, int productId)
+        {
+            var cart = await GetCartByUserIdAsync(userId);
+            var cartItem = cart?.Items.FirstOrDefault(ci => ci.ProductId == productId);
+
+            if (cartItem != null)
+            {
+                cart.Items.Remove(cartItem);
+                await _context.SaveChangesAsync();
+            }
+        }
     }
 }
