@@ -56,7 +56,7 @@ namespace ECommerce.Infrastructure.Data.Repositories
                 }
                 else
                 {
-                    cart.Items.Remove(cartItem);
+                    cart!.Items.Remove(cartItem);
                 }
                 await _context.SaveChangesAsync();
             }
@@ -69,7 +69,7 @@ namespace ECommerce.Infrastructure.Data.Repositories
 
             if (cartItem != null)
             {
-                cart.Items.Remove(cartItem);
+                cart!.Items.Remove(cartItem);
                 await _context.SaveChangesAsync();
             }
         }
