@@ -34,5 +34,25 @@ namespace ECommerce.Api.Controllers
 
             return CreatedAtAction(nameof(CreateOrder), new { id = order.Id }, _mapper.Map<OrderDto>(order));
         }
+
+        [HttpGet]
+        public async Task<ActionResult<IReadOnlyList<OrderDto>>> GetOrdersForUser()
+        {
+            var orders = await _orderService.GetOrdersForUserAsync(GetUserId());
+            return Ok(_mapper.Map<IReadOnlyList<OrderDto>>(orders));
+        }
+
+        [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<OrderDto>> GetOrderDetails(int id)
+        {
+            var order = await _orderService.GetOrderDetailsAsync(id, GetUserId());
+            if (order == null)
+            {
+                return NotFound();
+            }
+            return Ok(_mapper.Map<OrderDto>(order));
+        }
     }
 }

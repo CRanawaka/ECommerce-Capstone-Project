@@ -52,5 +52,23 @@ namespace ECommerce.Infrastructure.Services
             await _context.SaveChangesAsync();
             return order;
         }
+
+        public async Task<IReadOnlyList<Order>> GetOrdersForUserAsync(int userId)
+        {
+            return await _context.Orders
+                .Where(o => o.UserId == userId)
+                .Include(o => o.OrderItems)
+                .ThenInclude(oi => oi.Product)
+                .OrderByDescending(o => o.OrderDate)
+                .ToListAsync();
+        }
+
+        public async Task<Order?> GetOrderDetailsAsync(int orderId, int userId)
+        {
+            return await _context.Orders
+                .Include(o => o.OrderItems)
+                .ThenInclude(oi => oi.Product)
+                .FirstOrDefaultAsync(o => o.Id == orderId && o.UserId == userId);
+        }
     }
 }
