@@ -20,20 +20,15 @@ namespace ECommerce.Api.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register(UserRegisterDto request)
         {
-            try
-            {
-                var newUser = await _authService.RegisterAsync(
-                    request.FirstName,
-                    request.LastName,
-                    request.Email,
-                    request.Password);
 
-                return CreatedAtAction(nameof(Register), new { id = newUser.Id }, newUser);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { message = ex.Message });
-            }
+            var newUser = await _authService.RegisterAsync(
+                request.FirstName,
+                request.LastName,
+                request.Email,
+                request.Password);
+
+            return CreatedAtAction(nameof(Register), new { id = newUser.Id }, newUser);
+
         }
 
         [HttpPost("login")]

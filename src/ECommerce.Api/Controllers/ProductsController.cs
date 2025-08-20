@@ -27,6 +27,12 @@ namespace ECommerce.Api.Controllers
             return Ok(_mapper.Map<IReadOnlyList<ProductDto>>(products));
         }
 
+        /// <summary>
+        /// Get a single product by its ID
+        /// </summary>
+        /// <param name="id">The ID of the product to retrieve.</param>
+        /// <response code="200">Returns the requested product.</response>
+        /// <response code="404">If the product with the given ID is not found.</response>
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
